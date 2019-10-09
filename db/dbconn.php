@@ -1,4 +1,5 @@
 <?php
+
 $driver = 'mysql'; // тип базы данных, с которой мы будем работать
 $host = '127.0.0.1'; // альтернатива '127.0.0.1' - адрес хоста, в нашем случае локального
 $db_name = 'marlin'; // имя базы данных
@@ -21,31 +22,5 @@ $pdo = new PDO(
     $db_password,
     $options
 );
-
-
-
-
-
-$sql = "SELECT * FROM comments";
-
-$statement  = $pdo->query($sql);
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-echo '<pre>';
-print_r($result);
-echo '</pre>';
-//foreach ($item as $result->fetch())
-//{
-//}
-
-
-
-
-
-
-
-
-
-
 
 ?>

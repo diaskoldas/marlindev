@@ -1,21 +1,13 @@
 <?php
-$arrComments = [
-    [
-        'user_name' => 'John Doe',
-        'date' => '12/10/2025',
-        'message' => 'Hi, I redy!',
-    ],
-    [
-        'user_name' => 'John Doe',
-        'date' => '12/10/2025',
-        'message' => 'Hi, I redy!',
-    ],
-    [
-        'user_name' => 'John Doe',
-        'date' => '12/10/2025',
-        'message' => 'Hi, I redy!',
-    ],
-];
+require 'db/dbconn.php';
+require 'db/QueryBilder.php';
+require 'myFunc/myFunc.php';
+
+
+
+$arrComments = QueryBilder::getComments($pdo);
+
+//d($arrComments);
 ?>
 
 <!DOCTYPE html>
