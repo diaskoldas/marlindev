@@ -42,7 +42,7 @@ $arrComments = $queryBilder->getComments(false);
                                 <?php endif; ?>
                                 <?php foreach ($arrComments as $key => $item) : ?>
                                 <div class="media">
-                                    <img src="<?= $item['avatar'] != '' ? $item['avatar'] : 'img/no-user.jpg' ?>" class="mr-3" alt="..." width="64" height="64">
+                                    <img src="<?= $item['image'] != '' ? $item['image'] : 'img/no-user.jpg' ?>" class="mr-3" alt="..." width="64" height="64">
                                     <div class="media-body">
                                         <h5 class="mt-0"><?= $item['user_name']; ?></h5>
                                         <span><small><?= $item['date']; ?></small></span>
@@ -68,100 +68,25 @@ $arrComments = $queryBilder->getComments(false);
                                     <div class="form-group">
                                         <label>Сообщение</label>
                                         <?php
-                                        $invalid_class = '';
-                                        $err_mess = '';
-                                        $data = '';
-                                        $form = $_SESSION['add_form']['message'];
-                                        if (!empty($form))
+                                        $is_invalid = '';
+                                        $message = '';
+                                        $warning = $_SESSION['warning']['message'];
+                                        $data = $warning['data'] ? $warning['data'] : '';
+                                        if (!empty($warning['message']))
                                         {
-                                            if ($form['is_valid'] == false)
-                                            {
-                                                $invalid_class = 'is-invalid';
-                                                $err_mess = $form['message'];
-                                            }
-                                            if ($form['is_valid'] == true)
-                                            {
-                                                $data = $form['data'];
-                                            }
+                                            $is_invalid = 'is-invalid';
+                                            $message = $warning['message'];
                                         }
                                         ?>
-                                        <textarea name="message" class="form-control <?= $invalid_class; ?>" rows="3"><?= $data; ?></textarea>
+                                        <textarea name="message" class="form-control <?= $is_invalid; ?>"  value="<?= $data; ?>"></textarea>
                                         <span class="invalid-feedback" role="alert">
-                                            <strong><?= $err_mess; ?></strong>
+                                            <strong><?= $message; ?></strong>
                                         </span>
                                     </div>
                                     <button type="submit" class="btn btn-success">Отправить</button>
                                 </form>
                             </div>
                         </div>
-                        <?php endif; ?>
-
-                        <?php if (!empty($_SESSION['user_data']) && false) : ?>
-                            <div class="card">
-                                <div class="card-header"><h3>Оставить комментарий</h3></div>
-                                <div class="card-body">
-                                    <form enctype="multipart/form-data" action="addComment.php" method="post">
-                                        <?php if (empty($_SESSION['user_data'])) : ?>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">Имя</label>
-                                                <?php
-                                                $invalid_class = '';
-                                                $err_mess = '';
-                                                $data = '';
-                                                $form = $_SESSION['add_form']['user_name'];
-                                                if (!empty($form))
-                                                {
-                                                    if ($form['is_valid'] == false)
-                                                    {
-                                                        $invalid_class = 'is-invalid';
-                                                        $err_mess = $form['message'];
-                                                    }
-                                                    if ($form['is_valid'] == true)
-                                                    {
-                                                        $data = $form['data'];
-                                                    }
-                                                }
-                                                ?>
-                                                <input name="user_name" class="form-control <?= $invalid_class; ?>" value="<?= $data; ?>" />
-                                                <span class="invalid-feedback" role="alert">
-                                            <strong><?= $err_mess; ?></strong>
-                                        </span>
-                                            </div>
-                                        <?php endif; ?>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlTextarea1">Сообщение</label>
-                                            <?php
-                                            $invalid_class = '';
-                                            $err_mess = '';
-                                            $data = '';
-                                            $form = $_SESSION['add_form']['message'];
-                                            if (!empty($form))
-                                            {
-                                                if ($form['is_valid'] == false)
-                                                {
-                                                    $invalid_class = 'is-invalid';
-                                                    $err_mess = $form['message'];
-                                                }
-                                                if ($form['is_valid'] == true)
-                                                {
-                                                    $data = $form['data'];
-                                                }
-                                            }
-                                            ?>
-                                            <textarea name="message" class="form-control <?= $invalid_class; ?>" rows="3"><?= $data; ?></textarea>
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong><?= $err_mess; ?></strong>
-                                        </span>
-                                        </div>
-                                        <?php if (empty($_SESSION['user_data'])) : ?>
-                                            <div class="custom-file mb-3">
-                                                <input name="avatar" type="file">
-                                            </div>
-                                        <?php endif; ?>
-                                        <button type="submit" class="btn btn-success">Отправить</button>
-                                    </form>
-                                </div>
-                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -175,6 +100,6 @@ $arrComments = $queryBilder->getComments(false);
 </html>
 
 <?php
-unset($_SESSION['add_form']);
+unset($_SESSION['warning']);
 unset($_SESSION['new_comment']);
 ?>

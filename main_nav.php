@@ -44,7 +44,7 @@ session_start();
                                 Администратор
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="user_logout.php?logout=true">
+                            <a class="dropdown-item text-danger" href="components/com_logout.php?logout=true">
                                 <img class="mr-1" src="https://img.icons8.com/windows/25/000000/exit.png" alt="">
                                 Выйти
                             </a>

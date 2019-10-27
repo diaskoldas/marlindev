@@ -2,6 +2,7 @@
 session_start();
 
 require 'myFunc/myFunc.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,97 +34,85 @@ require 'myFunc/myFunc.php';
                     <div class="card">
                         <div class="card-header">Регистрация</div>
                         <div class="card-body">
-                            <form method="POST" action="addUser.php">
+                            <form method="POST" action="components/com_add_user.php">
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Имя</label>
                                     <div class="col-md-6">
                                         <?php
-                                        $invalid_class = '';
-                                        $err_mess = '';
-                                        $data = '';
-                                        $form = $_SESSION['add_user_form']['name'];
-                                        if (!empty($form))
+                                        $is_invalid = '';
+                                        $message = '';
+                                        $warning = $_SESSION['warning']['name'];
+                                        $data = $warning['data'] ? $warning['data'] : '';
+                                        if (!empty($warning['message']))
                                         {
-                                            if ($form['is_valid'] == false)
-                                            {
-                                                $invalid_class = 'is-invalid';
-                                                $data = $form['data'];
-                                                $err_mess = $form['message'];
-                                            }
-                                            if ($form['is_valid'] == true)
-                                            {
-                                                $data = $form['data'];
-                                            }
+                                            $is_invalid = 'is-invalid';
+                                            $message = $warning['message'];
                                         }
                                         ?>
-                                        <input name="name" type="text" class="form-control <?= $invalid_class; ?>"  value="<?= $data; ?>">
+                                        <input name="name" type="text" class="form-control <?= $is_invalid; ?>"  value="<?= $data; ?>">
                                         <span class="invalid-feedback" role="alert">
-                                                <strong><?= $err_mess; ?></strong>
-                                            </span>
+                                            <strong><?= $message; ?></strong>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">E-Mail почта</label>
                                     <div class="col-md-6">
                                         <?php
-                                        $invalid_class = '';
-                                        $err_mess = '';
-                                        $data = '';
-                                        $form = $_SESSION['add_user_form']['email'];
-                                        if (!empty($form))
+                                        $is_invalid = '';
+                                        $message = '';
+                                        $warning = $_SESSION['warning']['email'];
+                                        $data = $warning['data'] ? $warning['data'] : '';
+                                        if (!empty($warning['message']))
                                         {
-                                            if ($form['is_valid'] == false)
-                                            {
-                                                $invalid_class = 'is-invalid';
-                                                $data = $form['data'];
-                                                $err_mess = $form['message'];
-                                            }
-                                            if ($form['is_valid'] == true)
-                                            {
-                                                $data = $form['data'];
-                                            }
+                                            $is_invalid = 'is-invalid';
+                                            $message = $warning['message'];
                                         }
                                         ?>
-                                        <input name="email" type="email" class="form-control <?= $invalid_class; ?>"  value="<?= $data; ?>" autocomplete="email">
+                                        <input name="email" type="email" class="form-control <?= $is_invalid; ?>"  value="<?= $data; ?>">
                                         <span class="invalid-feedback" role="alert">
-                                                <strong><?= $err_mess; ?></strong>
-                                            </span>
+                                            <strong><?= $message; ?></strong>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Пароль</label>
                                     <div class="col-md-6">
                                         <?php
-                                        $invalid_class = '';
-                                        $err_mess = '';
-                                        $data = '';
-                                        $form = $_SESSION['add_user_form']['password'];
-                                        if (!empty($form))
+                                        $is_invalid = '';
+                                        $message = '';
+                                        $warning = $_SESSION['warning']['password'];
+                                        $data = $warning['data'] ? $warning['data'] : '';
+                                        if (!empty($warning['message']))
                                         {
-                                            if ($form['is_valid'] == false)
-                                            {
-                                                $invalid_class = 'is-invalid';
-                                                $err_mess = $form['message'];
-                                            }
-                                            if ($form['is_valid'] == true)
-                                            {
-                                                $data = $form['data'];
-                                            }
+                                            $is_invalid = 'is-invalid';
+                                            $message = $warning['message'];
                                         }
                                         ?>
-                                        <input name="password" type="password" class="form-control <?= $invalid_class; ?>"  autocomplete="new-password">
+                                        <input name="password" type="password" class="form-control <?= $is_invalid; ?>"  value="<?= $data; ?>">
                                         <span class="invalid-feedback" role="alert">
-                                                <strong><?= $err_mess; ?></strong>
-                                            </span>
+                                            <strong><?= $message; ?></strong>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Повторите пароль</label>
                                     <div class="col-md-6">
-                                        <input name="password_confirmation" type="password" class="form-control <?= $invalid_class; ?>" autocomplete="new-password">
+                                        <?php
+                                        $is_invalid = '';
+                                        $message = '';
+                                        $warning = $_SESSION['warning']['password_confirmation'];
+                                        $data = $warning['data'] ? $warning['data'] : '';
+                                        if (!empty($warning['message']))
+                                        {
+                                            $is_invalid = 'is-invalid';
+                                            $message = $warning['message'];
+                                        }
+                                        ?>
+                                        <input name="password_confirmation" type="password" class="form-control <?= $is_invalid; ?>"  value="<?= $data; ?>">
                                         <span class="invalid-feedback" role="alert">
-                                                <strong><?= $err_mess; ?></strong>
-                                            </span>
+                                            <strong><?= $message; ?></strong>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-0">
@@ -145,6 +134,6 @@ require 'myFunc/myFunc.php';
 </html>
 
 <?php
-unset($_SESSION['add_user_form']);
+unset($_SESSION['warning']);
 unset($_SESSION['new_user']);
 ?>

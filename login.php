@@ -2,6 +2,7 @@
 session_start();
 
 require 'myFunc/myFunc.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,10 +29,8 @@ require 'myFunc/myFunc.php';
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header">Авторизация</div>
-
                             <div class="card-body">
-                                <form method="POST" action="user_varification.php">
-
+                                <form method="POST" action="components/com_login.php">
                                     <div class="form-group row">
                                         <label class="col-md-4 col-form-label text-md-right">E-Mail почта</label>
                                         <div class="col-md-6">
@@ -44,26 +43,19 @@ require 'myFunc/myFunc.php';
                                                 $data = $email;
                                             }
 
-                                            $invalid_class = '';
-                                            $err_mess = '';
-                                            $form = $_SESSION['user_login_form']['email'];
-                                            if (!empty($form))
+                                            $is_invalid = '';
+                                            $message = '';
+                                            $warning = $_SESSION['warning']['email'];
+                                            $data = $warning['data'] ? $warning['data'] : '';
+                                            if (!empty($warning['message']))
                                             {
-                                                if ($form['is_valid'] == false)
-                                                {
-                                                    $invalid_class = 'is-invalid';
-                                                    $err_mess = $form['message'];
-                                                    $data = $form['data'];
-                                                }
-                                                if ($form['is_valid'] == true)
-                                                {
-                                                    $data = $form['data'];
-                                                }
+                                                $is_invalid = 'is-invalid';
+                                                $message = $warning['message'];
                                             }
                                             ?>
-                                            <input name="email" type="email" class="form-control <?= $invalid_class; ?>" value="<?= $data; ?>" autocomplete="email">
+                                            <input name="email" type="email" class="form-control <?= $is_invalid; ?>" value="<?= $data; ?>" autocomplete="email">
                                             <span class="invalid-feedback" role="alert">
-                                                <strong><?= $err_mess; ?></strong>
+                                                <strong><?= $message; ?></strong>
                                             </span>
                                         </div>
                                     </div>
@@ -81,26 +73,19 @@ require 'myFunc/myFunc.php';
                                                 $checked = 'checked';
                                             }
 
-                                            $invalid_class = '';
-                                            $err_mess = '';
-                                            $form = $_SESSION['user_login_form']['password'];
-                                            if (!empty($form))
+                                            $is_invalid = '';
+                                            $message = '';
+                                            $warning = $_SESSION['warning']['password'];
+                                            $data = $warning['data'] ? $warning['data'] : '';
+                                            if (!empty($warning['message']))
                                             {
-                                                if ($form['is_valid'] == false)
-                                                {
-                                                    $invalid_class = 'is-invalid';
-                                                    $err_mess = $form['message'];
-                                                    $data = $form['data'];
-                                                }
-                                                if ($form['is_valid'] == true)
-                                                {
-                                                    $data = $form['data'];
-                                                }
+                                                $is_invalid = 'is-invalid';
+                                                $message = $warning['message'];
                                             }
                                             ?>
-                                            <input name="password" type="password" class="form-control <?= $invalid_class; ?>" value="<?= $data; ?>" autocomplete="current-password">
+                                            <input name="password" type="password" class="form-control <?= $is_invalid; ?>" value="<?= $data; ?>" autocomplete="current-password">
                                             <span class="invalid-feedback" role="alert">
-                                                <strong><?= $err_mess; ?></strong>
+                                                <strong><?= $message; ?></strong>
                                             </span>
                                         </div>
                                     </div>
@@ -136,5 +121,5 @@ require 'myFunc/myFunc.php';
 </html>
 
 <?php
-unset($_SESSION['user_login_form']);
+unset($_SESSION['warning']);
 ?>

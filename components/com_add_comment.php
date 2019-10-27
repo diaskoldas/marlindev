@@ -6,26 +6,43 @@ require '../db/QueryBilder.php';
 
 $quertyBilder = new QueryBilder();
 
-$data = [];
-
+$name = $_SESSION['user_data']['name'];
+$image = $_SESSION['user_data']['image'] ? $_SESSION['user_data']['image'] : '';
+$date = date('Y-m-d');
 $message = $_POST['message'];
 
-if (!filter_var($message, FILTER_SANITIZE_STRING))
+$warning = [];
+
+if (strlen($message) == 0)
 {
-    echo 'Ошибка фильтрации';
+    $warning['message']['message'] = 'Заполните обязательное поле';
+}
+if (count($warning) > 0)
+{
+    $_SESSION['warning'] = $warning;
+    header('Location: ../index.php');
     die;
 }
-
-$data['name'] = $_SESSION['user_data']['name'];
-$data['avatar'] = $_SESSION['user_data']['image'] ? $_SESSION['user_data']['image'] : '';
-$data['date'] = date('Y-m-d');
-$data['message'] = $message;
-
-$result = $quertyBilder->addComment($data['name'], $data['avatar'], $data['date'], $data['message']);
-
+if (!filter_var($message, FILTER_SANITIZE_STRING))
+{
+    $warning['message']['message'] = 'Ошибка фильтрации';
+}
+if (count($warning) > 0)
+{
+    $warning['message']['data'] = $message;
+    $_SESSION['warning'] = $warning;
+    header('Location: ../index.php');
+    die;
+}
+$result = $quertyBilder->addComment($name, $image, $date, $message);
 if (!$result)
 {
-    echo 'Ошибка добаления';
+    $warning['page']['message'] = 'Ошибка добавления коментария';
+}
+if (count($warning) > 0)
+{
+    $_SESSION['warning'] = $warning;
+    header('Location: ../index.php');
     die;
 }
 

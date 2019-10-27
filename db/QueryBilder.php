@@ -73,7 +73,7 @@ class QueryBilder extends DataBase
         return $result['email'];
     }
 
-    public function userVerification ($email)
+    public function findUserByEmail ($email)
     {
         $sql = "SELECT `id`, `name`, `password` FROM `users` WHERE `email` = :email";
         $statement = $this->pdo->prepare($sql);
@@ -83,13 +83,13 @@ class QueryBilder extends DataBase
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addComment ($user_name, $avatar, $date, $message)
+    public function addComment ($user_name, $image, $date, $message)
     {
-        $sql = "INSERT INTO `comments`(`user_name`, `avatar`, `date`, `message`, `state`) VALUES (:user_name, :avatar, :today_date, :message, 1)";
+        $sql = "INSERT INTO `comments`(`user_name`, `image`, `date`, `message`, `state`) VALUES (:user_name, :image, :today_date, :message, 1)";
         $statement = $this->pdo->prepare($sql);
         $result = $statement->execute(array(
             ':user_name' => $user_name,
-            ':avatar'    => $avatar,
+            ':image'    => $image,
             ':today_date'=> $date,
             ':message'   => $message,
         ));
